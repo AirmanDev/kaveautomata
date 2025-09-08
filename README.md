@@ -1,2 +1,2 @@
-# K-v-aut-mata
+# Kávéautómata
 Projektmunka c# kávéautómata készítése. Belt Bálint Viktor, Kiss Máté, Horváth-Gortva Zalán

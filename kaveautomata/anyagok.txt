@@ -1,0 +1,6 @@
+Név;Mennyiség
+Kávépor;50
+Tejpor;50
+Cukor;50
+Kakaópor;50
+Víz;50

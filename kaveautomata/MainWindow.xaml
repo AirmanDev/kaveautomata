@@ -23,7 +23,7 @@
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="8">
+                                    CornerRadius="10">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -47,31 +47,31 @@
     <Canvas Height="584">
         <!-- Elrendezés: 450 széles ablak; bal panel 200, jobb panel 130; közök: 40-40-40 -->
         <!-- Bal oldali gombok (Canvas.Left=40) egységes távolsággal -->
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="Fekete Kávé" Width="200" Height="40" Canvas.Left="40" Canvas.Top="20"/>
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="Hosszú Kávé" Width="200" Height="40" Canvas.Left="40" Canvas.Top="70"/>
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="Latte" Width="200" Height="40" Canvas.Left="40" Canvas.Top="120"/>
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="Cappuccino" Width="200" Height="40" Canvas.Left="40" Canvas.Top="170"/>
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="Jegeskávé" Width="200" Height="40" Canvas.Left="40" Canvas.Top="220"/>
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="Moccaccino" Width="200" Height="40" Canvas.Left="40" Canvas.Top="270"/>
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="Forró Csoki" Width="200" Height="40" Canvas.Left="40" Canvas.Top="320"/>
+        <Button x:Name="Fekete_Kave" Style="{StaticResource RoundedButtonStyle}" Content="Fekete Kávé" Width="200" Height="40" Canvas.Left="40" Canvas.Top="20" Click="Fekete_Kave_Click"/>
+        <Button x:Name="Hosszu_Kave" Style="{StaticResource RoundedButtonStyle}" Content="Hosszú Kávé" Width="200" Height="40" Canvas.Left="40" Canvas.Top="70" Click="Hosszu_Kave_Click"/>
+        <Button x:Name="Latte" Style="{StaticResource RoundedButtonStyle}" Content="Latte" Width="200" Height="40" Canvas.Left="40" Canvas.Top="120" Click="Latte_Click"/>
+        <Button x:Name="Cappuccino" Style="{StaticResource RoundedButtonStyle}" Content="Cappuccino" Width="200" Height="40" Canvas.Left="40" Canvas.Top="170" Click="Cappuccino_Click"/>
+        <Button x:Name="Jegeskave" Style="{StaticResource RoundedButtonStyle}" Content="Jegeskávé" Width="200" Height="40" Canvas.Left="40" Canvas.Top="220" Click="Jegeskave_Click"/>
+        <Button x:Name="Moccaccino" Style="{StaticResource RoundedButtonStyle}" Content="Moccaccino" Width="200" Height="40" Canvas.Left="40" Canvas.Top="270" Click="Moccaccino_Click"/>
+        <Button x:Name="Forro_Csoki" Style="{StaticResource RoundedButtonStyle}" Content="Forró Csoki" Width="200" Height="40" Canvas.Left="40" Canvas.Top="320" Click="Forro_Csoki_Click"/>
 
         <!-- Ár és alatta a 0 mögé panel (lekerekített sarokkal) -->
         <Border Canvas.Left="280" Canvas.Top="20" Width="130" Height="80"
                 Background="#FFF0F0F0" CornerRadius="8" BorderBrush="#FF707070" BorderThickness="1">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="Ár" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4"/>
-                <TextBlock Text="0" FontSize="24" HorizontalAlignment="Center" Margin="0,4"/>
+                <TextBlock x:Name="Ar_ki" Text="0" FontSize="24" HorizontalAlignment="Center" Margin="0,4"/>
             </StackPanel>
         </Border>
 
         <!-- Jobb oldali panel bal széle (Canvas.Left=280), szélesség 130 -->
         <!-- Mennyiség: - 0 +, középre igazítva a jobb panelben -->
-        <Button Style="{StaticResource RoundedButtonStyle}" Width="40" Height="40" Canvas.Left="285" Canvas.Top="110" Content="-"/>
-        <TextBlock Text="0" FontSize="24" Width="40" TextAlignment="Center" Canvas.Left="325" Canvas.Top="116"/>
-        <Button Style="{StaticResource RoundedButtonStyle}" Width="40" Height="40" Canvas.Left="365" Canvas.Top="110" Content="+"/>
+        <Button x:Name="Cukor_Less" Style="{StaticResource RoundedButtonStyle}" Width="40" Height="40" Canvas.Left="285" Canvas.Top="170" Content="-" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Cukor_Less_Click"/>
+        <TextBlock x:Name="Cukor_ki" Text="0" FontSize="24" Width="40" TextAlignment="Center" Canvas.Left="325" Canvas.Top="176" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="Cukor_More" Style="{StaticResource RoundedButtonStyle}" Width="40" Height="40" Canvas.Left="365" Canvas.Top="170" Content="+" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Cukor_More_Click"/>
 
         <!-- Vásárlás gomb: terminál kép, nincs felirat -->
-        <Button Style="{StaticResource RoundedButtonStyle}" Width="100" Height="90" Canvas.Left="295" Canvas.Top="170" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <Button x:Name="Buy" Style="{StaticResource RoundedButtonStyle}" Width="100" Height="90" Canvas.Left="295" Canvas.Top="230" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Buy_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/terminal.jpg"/>
             </Button.Background>
@@ -82,5 +82,11 @@
                 <ImageBrush ImageSource="/banner.jpg"/>
             </Image.OpacityMask>
         </Image>
+        <Border Canvas.Left="280" Canvas.Top="120" Width="130" Height="40"
+            Background="#FFF0F0F0" CornerRadius="8" BorderBrush="#FF707070" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4" Text="Cukor"/>
+            </StackPanel>
+        </Border>
     </Canvas>
 </Window>

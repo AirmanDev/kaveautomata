@@ -1,0 +1,102 @@
+﻿using System.IO;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Runtime.CompilerServices;
+
+namespace kaveautomata
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            // Ott keressük az anyagok.txt-t, ahol ez a .cs fájl van:
+            var sourceDir = GetSourceDirectory();
+            var materialPath = System.IO.Path.Combine(sourceDir, "anyagok.txt");
+
+            // Egyszerű: soronként bejárjuk és kiírjuk az első oszlopot
+            foreach (String line in File.ReadLines(materialPath, Encoding.UTF8))
+            {
+                var parts = line.Split(';');
+                if (parts.Length > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine(parts[1]);
+                }
+            }
+        }
+
+        // Visszaadja ennek a forrásfájlnak a könyvtárát
+        private static string GetSourceDirectory([CallerFilePath] string? thisFilePath = null)
+        {
+            return System.IO.Path.GetDirectoryName(thisFilePath!)!;
+        }
+
+        int cukor = 0;
+        int kavepor = 0;
+        int tejpor = 0;
+        int kakaoport = 0;
+        int viz = 0;
+
+        private void Fekete_Kave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Hosszu_Kave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Latte_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cappuccino_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Jegeskave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Moccaccino_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Forro_Csoki_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cukor_Less_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cukor_More_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Buy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+}

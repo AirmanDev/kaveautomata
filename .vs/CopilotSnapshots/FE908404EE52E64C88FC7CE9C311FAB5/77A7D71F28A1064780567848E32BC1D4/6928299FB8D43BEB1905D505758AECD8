@@ -1,0 +1,132 @@
+﻿using System.IO;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System;
+
+namespace kaveautomata
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            // Keressük az anyagok.txt fájlt ott, ahol a képek is lehetnek:
+            // 1) output mappa mellett
+            // 2) output mappában az Assets mappában
+            // 3) WPF erőforrásként (pack URI)
+            var baseDir = System.AppContext.BaseDirectory;
+            var candidate1 = Path.Combine(baseDir, "anyagok.txt");
+            var candidate2 = Path.Combine(baseDir, "Assets", "anyagok.txt");
+
+            StreamReader be;
+            if (File.Exists(candidate1))
+            {
+                be = new StreamReader(candidate1, Encoding.UTF8);
+            }
+            else if (File.Exists(candidate2))
+            {
+                be = new StreamReader(candidate2, Encoding.UTF8);
+            }
+            else
+            {
+                // Próbáljuk WPF Resource-ként (ugyanúgy, mint a képeket pack URI-val)
+                var uriCandidates = new[]
+                {
+                    new Uri("pack://application:,,,/anyagok.txt", UriKind.Absolute),
+                    new Uri("pack://application:,,,/Assets/anyagok.txt", UriKind.Absolute)
+                };
+
+                Stream? resourceStream = null;
+                foreach (var uri in uriCandidates)
+                {
+                    var info = Application.GetResourceStream(uri);
+                    if info != null)
+                    {
+                        resourceStream = info.Stream;
+                        break;
+                    }
+                }
+
+                if (resourceStream != null)
+                {
+                    be = new StreamReader(resourceStream, Encoding.UTF8);
+                }
+                else
+                {
+                    throw new FileNotFoundException("Nem található az 'anyagok.txt' sem az output mappában, sem az Assets mappában, sem erőforrásként.");
+                }
+            }
+
+            // TODO: használd a 'be' olvasót és zárd le, miután elolvastad a szükséges adatokat
+            // using var be = ...  // ha azonnal feldolgozod a tartalmat
+        }
+
+        int cukor = 0;
+        int kavepor = 0;
+        int tejpor = 0;
+        int kakaoport = 0;
+        int viz = 0;
+
+        private void Fekete_Kave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Hosszu_Kave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Latte_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cappuccino_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Jegeskave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Moccaccino_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Forro_Csoki_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cukor_Less_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cukor_More_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Buy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+}

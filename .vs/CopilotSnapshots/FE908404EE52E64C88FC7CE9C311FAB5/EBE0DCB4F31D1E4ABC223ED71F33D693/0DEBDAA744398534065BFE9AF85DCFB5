@@ -1,0 +1,112 @@
+﻿using System.IO;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Runtime.CompilerServices;
+using System;
+
+namespace kaveautomata
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            // Ott keressük az anyagok.txt-t, ahol ez a .cs fájl van:
+            var sourceDir = GetSourceDirectory();
+            var materialPath = System.IO.Path.Combine(sourceDir, "anyagok.txt");
+
+            // Csak a szükséges indexeket olvassuk ki (0..4), és a 2. oszlopot (index 1) használjuk
+            var lines = File.ReadAllLines(materialPath, Encoding.UTF8);
+
+            int GetCol1(string s)
+            {
+                var parts = s.Split(';');
+                return parts.Length > 1 && int.TryParse(parts[1], out var n) ? n : 0;
+            }
+
+            if (lines.Length > 0) cukor = GetCol1(lines[0]);
+            if (lines.Length > 1) kavepor = GetCol1(lines[1]);
+            if (lines.Length > 2) tejpor = GetCol1(lines[2]);
+            if (lines.Length > 3) kakaoport = GetCol1(lines[3]);
+            if (lines.Length > 4) viz = GetCol1(lines[4]);
+
+            // Ha csak a 0. és 1. index értéke kell a kimenetre:
+            if (lines.Length > 0) System.Diagnostics.Debug.WriteLine(GetCol1(lines[0]));
+            if (lines.Length > 1) System.Diagnostics.Debug.WriteLine(GetCol1(lines[1]));
+        }
+
+        // Visszaadja ennek a forrásfájlnak a könyvtárát
+        private static string GetSourceDirectory([CallerFilePath] string? thisFilePath = null)
+        {
+            return System.IO.Path.GetDirectoryName(thisFilePath!)!;
+        }
+
+        int cukor = 0;
+        int kavepor = 0;
+        int tejpor = 0;
+        int kakaoport = 0;
+        int viz = 0;
+
+        private void Fekete_Kave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Hosszu_Kave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Latte_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cappuccino_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Jegeskave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Moccaccino_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Forro_Csoki_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cukor_Less_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cukor_More_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Buy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+}

@@ -18,3 +18,4 @@ C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\obj\Debug\net8.0-win
 C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\obj\Debug\net8.0-windows\kaveautomata.pdb
 C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\obj\Debug\net8.0-windows\kaveautomata.genruntimeconfig.cache
 C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\obj\Debug\net8.0-windows\ref\kaveautomata.dll
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\obj\Debug\net8.0-windows\kaveautomata.sourcelink.json

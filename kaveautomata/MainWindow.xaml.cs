@@ -73,7 +73,7 @@ namespace kaveautomata
             {
                 if (recipesList[i].Split(";")[0] == "Fekete kávé")
                 {
-                    System.Diagnostics.Debug.WriteLine(recipesList[i]);
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
                 }
             }
                     UpdateButtons();
@@ -81,31 +81,73 @@ namespace kaveautomata
 
         private void Hosszu_Kave_Click(object sender, RoutedEventArgs e)
         {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Hosszú kávé")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
             UpdateButtons();
         }
 
         private void Latte_Click(object sender, RoutedEventArgs e)
         {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Latte")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
             UpdateButtons();
         }
 
         private void Cappuccino_Click(object sender, RoutedEventArgs e)
         {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Capuccino")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
             UpdateButtons();
         }
 
         private void Jegeskave_Click(object sender, RoutedEventArgs e)
         {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Jegeskávé")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
             UpdateButtons();
         }
 
         private void Moccaccino_Click(object sender, RoutedEventArgs e)
         {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Moccaccino")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
             UpdateButtons();
         }
 
         private void Forro_Csoki_Click(object sender, RoutedEventArgs e)
         {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Forró csoki")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
             UpdateButtons();
         }
 
@@ -132,9 +174,9 @@ namespace kaveautomata
             UpdateButtons();
         }
 
-        public void Buy_Coffe(int kavepor, int tejpor, int cukor, int kakopor, int viz)
+        public void Select_Coffe(int kavepor, int tejpor, int cukor, int kakaopor, int viz)
         {
-
+            System.Diagnostics.Debug.WriteLine(kavepor.ToString() + tejpor.ToString() + cukor.ToString() + kakaopor.ToString() + viz.ToString());
         }
 
         public void UpdateButtons()

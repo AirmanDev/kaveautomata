@@ -3,5 +3,6 @@ Fekete kávé;1;0;0;0;2
 Hosszú kávé;1;0;0;0;3
 Latte;1;2;1;0;2
 Capuccino;1;2;1;0;2
+Jegeskávé;1;1;1;0;2
 Moccaccino;1;1;1;1;2
 Forró csoki;0;1;1;2;2

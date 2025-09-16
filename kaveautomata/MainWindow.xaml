@@ -66,12 +66,12 @@
 
         <!-- Jobb oldali panel bal széle (Canvas.Left=280), szélesség 130 -->
         <!-- Mennyiség: - 0 +, középre igazítva a jobb panelben -->
-        <Button x:Name="Cukor_Less" Style="{StaticResource RoundedButtonStyle}" Width="40" Height="40" Canvas.Left="285" Canvas.Top="170" Content="-" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Cukor_Less_Click"/>
+        <Button x:Name="Cukor_Less" Style="{StaticResource RoundedButtonStyle}" Width="40" Height="40" Canvas.Left="285" Canvas.Top="170" Content="-" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Cukor_Less_Click" IsEnabled="False"/>
         <TextBlock x:Name="Cukor_ki" Text="0" FontSize="24" Width="40" TextAlignment="Center" Canvas.Left="325" Canvas.Top="176" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button x:Name="Cukor_More" Style="{StaticResource RoundedButtonStyle}" Width="40" Height="40" Canvas.Left="365" Canvas.Top="170" Content="+" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Cukor_More_Click"/>
+        <Button x:Name="Cukor_More" Style="{StaticResource RoundedButtonStyle}" Width="40" Height="40" Canvas.Left="365" Canvas.Top="170" Content="+" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Cukor_More_Click" IsEnabled="False"/>
 
         <!-- Vásárlás gomb: terminál kép, nincs felirat -->
-        <Button x:Name="Buy" Style="{StaticResource RoundedButtonStyle}" Width="100" Height="90" Canvas.Left="295" Canvas.Top="230" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Buy_Click">
+        <Button x:Name="Buy" Style="{StaticResource RoundedButtonStyle}" Width="100" Height="90" Canvas.Left="295" Canvas.Top="230" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Buy_Click" IsEnabled="False">
             <Button.Background>
                 <ImageBrush ImageSource="/terminal.jpg"/>
             </Button.Background>

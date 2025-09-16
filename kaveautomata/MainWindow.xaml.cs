@@ -65,73 +65,90 @@ namespace kaveautomata
         int kakaoport = 0;
         int viz = 0;
 
+        int cukorMennyiseg = 0;
+
         private void Fekete_Kave_Click(object sender, RoutedEventArgs e)
         {
-            //System.Diagnostics.Debug.WriteLine(recipesList[1].Split(";")[1]);
             for (int i = 1; i < recipesList.Count; i++)
             {
                 if (recipesList[i].Split(";")[0] == "Fekete kávé")
                 {
-                    if (kavepor <= 0 || viz <= 0)
-                    {
-                        MessageBox.Show("Nincs elég alapanyag a kávé elkészítéséhez!");
-                        return;
-                    }
-                    else
-                    {
-                        kavepor = kavepor - int.Parse(recipesList[i].Split(";")[1]);
-                        viz = viz - int.Parse(recipesList[i].Split(";")[5]);
-
-                        System.Diagnostics.Debug.WriteLine(kavepor);
-                        System.Diagnostics.Debug.WriteLine(viz);
-                    }
+                    System.Diagnostics.Debug.WriteLine(recipesList[i]);
                 }
             }
+                    UpdateButtons();
         }
 
         private void Hosszu_Kave_Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateButtons();
         }
 
         private void Latte_Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateButtons();
         }
 
         private void Cappuccino_Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateButtons();
         }
 
         private void Jegeskave_Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateButtons();
         }
 
         private void Moccaccino_Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateButtons();
         }
 
         private void Forro_Csoki_Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateButtons();
         }
 
         private void Cukor_Less_Click(object sender, RoutedEventArgs e)
         {
-
+            if (cukorMennyiseg > 0)
+            {
+                cukorMennyiseg--;
+                Cukor_ki.Text = cukorMennyiseg.ToString();
+            }
         }
 
         private void Cukor_More_Click(object sender, RoutedEventArgs e)
         {
-
+            if (cukorMennyiseg < 3)
+            {
+                cukorMennyiseg++;
+                Cukor_ki.Text = cukorMennyiseg.ToString();
+            }
         }
 
         private void Buy_Click(object sender, RoutedEventArgs e)
         {
+            UpdateButtons();
+        }
 
+        public void Buy_Coffe(int kavepor, int tejpor, int cukor, int kakopor, int viz)
+        {
+
+        }
+
+        public void UpdateButtons()
+        {
+            Fekete_Kave.IsEnabled = !Fekete_Kave.IsEnabled;
+            Hosszu_Kave.IsEnabled = !Hosszu_Kave.IsEnabled;
+            Latte.IsEnabled = !Latte.IsEnabled;
+            Cappuccino.IsEnabled = !Cappuccino.IsEnabled;
+            Jegeskave.IsEnabled = !Jegeskave.IsEnabled;
+            Moccaccino.IsEnabled = !Moccaccino.IsEnabled;
+            Forro_Csoki.IsEnabled = !Forro_Csoki.IsEnabled;
+            Buy.IsEnabled = !Buy.IsEnabled;
+            Cukor_Less.IsEnabled = !Cukor_Less.IsEnabled;
+            Cukor_More.IsEnabled = !Cukor_More.IsEnabled;
         }
     }
 }

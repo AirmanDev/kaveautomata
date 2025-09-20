@@ -88,5 +88,6 @@
                 <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4" Text="Cukor"/>
             </StackPanel>
         </Border>
+        <Button x:Name="Reset_Materials"  Style="{StaticResource RoundedButtonStyle}" Canvas.Left="280" Canvas.Top="320" Content="Reset" HorizontalAlignment="Center" VerticalAlignment="Top" Width="130" Height="40" Click="Reset_Materials_Click" Visibility="Hidden"/>
     </Canvas>
 </Window>

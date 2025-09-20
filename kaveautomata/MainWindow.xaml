@@ -71,7 +71,7 @@
         <Button x:Name="Cukor_More" Style="{StaticResource RoundedButtonStyle}" Width="40" Height="40" Canvas.Left="365" Canvas.Top="170" Content="+" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Cukor_More_Click" IsEnabled="False"/>
 
         <!-- Vásárlás gomb: terminál kép, nincs felirat -->
-        <Button x:Name="Buy" Style="{StaticResource RoundedButtonStyle}" Width="100" Height="90" Canvas.Left="295" Canvas.Top="230" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Buy_Click" IsEnabled="False">
+        <Button x:Name="Buy" Style="{StaticResource RoundedButtonStyle}" Width="100" Height="90" Canvas.Left="295" Canvas.Top="230" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Buy_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/terminal.jpg"/>
             </Button.Background>
@@ -88,6 +88,6 @@
                 <TextBlock FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4" Text="Cukor"/>
             </StackPanel>
         </Border>
-        <Button x:Name="Reset_Materials"  Style="{StaticResource RoundedButtonStyle}" Canvas.Left="280" Canvas.Top="320" Content="Reset" HorizontalAlignment="Center" VerticalAlignment="Top" Width="130" Height="40" Click="Reset_Materials_Click" Visibility="Hidden"/>
+        <Button x:Name="Reset_Materials"  Style="{StaticResource RoundedButtonStyle}" Canvas.Left="280" Canvas.Top="320" Content="Reset" HorizontalAlignment="Center" VerticalAlignment="Top" Width="130" Height="40" Click="Reset_Materials_Click" Visibility="Visible"/>
     </Canvas>
 </Window>

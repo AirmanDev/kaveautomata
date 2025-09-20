@@ -39,3 +39,16 @@ D:\Horvath-Gortva_Zalan\kaveautomata\kaveautomata\obj\Debug\net8.0-windows\refin
 D:\Horvath-Gortva_Zalan\kaveautomata\kaveautomata\obj\Debug\net8.0-windows\kaveautomata.pdb
 D:\Horvath-Gortva_Zalan\kaveautomata\kaveautomata\obj\Debug\net8.0-windows\kaveautomata.genruntimeconfig.cache
 D:\Horvath-Gortva_Zalan\kaveautomata\kaveautomata\obj\Debug\net8.0-windows\ref\kaveautomata.dll
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\anyagok.txt
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\receptek.txt
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\mastercard_checkout.mp4
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\cappuccino.wav
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\fekete_kave.wav
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\forro_csoki.wav
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\hosszu_kave.wav
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\jegeskave.wav
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\koszonjuk.wav
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\latte.wav
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\moccaccino.wav
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\sikertelen.wav
+C:\Users\Airmancooma\source\repos\kaveautomata\kaveautomata\bin\Debug\net8.0-windows\hangok\udvozlom.wav

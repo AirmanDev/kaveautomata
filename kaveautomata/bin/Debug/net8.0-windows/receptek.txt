@@ -1,0 +1,8 @@
+Név;Kávépor;Tejpor;Cukor;Kakaópor;Víz;Ár 
+Fekete_Kave;1;0;0;0;2;120
+Hosszu_Kave;1;0;0;0;3;130
+Latte;1;2;1;0;2;290
+Cappuccino;1;2;1;0;2;290
+Jegeskave;1;1;1;0;2;210
+Moccaccino;1;1;1;1;2;270
+Forro_Csoki;0;1;1;2;2;230

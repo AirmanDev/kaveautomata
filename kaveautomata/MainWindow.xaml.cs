@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Media;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +10,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Runtime.CompilerServices;
 
 namespace kaveautomata
 {
@@ -18,17 +18,17 @@ namespace kaveautomata
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly MediaPlayer mediaPlayer = new();
+        private readonly SoundPlayer soundPlayer = new();
         private readonly List<string> recipesList = new();
         string materialPath = "";
         string recipePath = "";
-        string sourceDir = GetSourceDirectory();
+        string exeDir = GetExecutableDirectory();
         public MainWindow()
         {
-            // Ott keressük az anyagok.txt-t ahol ez a .cs fájl van
-            sourceDir = GetSourceDirectory();
-            materialPath = System.IO.Path.Combine(sourceDir, "anyagok.txt");
-            recipePath = System.IO.Path.Combine(sourceDir, "receptek.txt");
+            // Ott keressük az anyagok.txt-t ahol az exe van
+            exeDir = GetExecutableDirectory();
+            materialPath = System.IO.Path.Combine(exeDir, "anyagok.txt");
+            recipePath = System.IO.Path.Combine(exeDir, "receptek.txt");
 
             String[] materials = File.ReadAllLines(materialPath, Encoding.UTF8);
             String[] recipes = File.ReadAllLines(recipePath, Encoding.UTF8);
@@ -57,11 +57,13 @@ namespace kaveautomata
             }
         }
 
-        // Visszaadja ennek a forrásfájlnak a könyvtárát
-        private static string GetSourceDirectory([CallerFilePath] string? thisFilePath = null)
+        // Visszaadja az exe könyvtárát
+        private static string GetExecutableDirectory()
         {
-            return System.IO.Path.GetDirectoryName(thisFilePath!)!;
+            return System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)!;
         }
+
+        bool kezdet = true;
 
         int ar = 0;
         int teljes_koltes = 0;
@@ -135,32 +137,47 @@ namespace kaveautomata
 
         private void Buy_Click(object sender, RoutedEventArgs e)
         {
-            kavepor -= selected_materials[0];
-            tejpor -= selected_materials[1];
-            cukor -= (selected_materials[2] + cukorMennyiseg);
-            kakaopor -= selected_materials[3];
-            viz -= selected_materials[4];
+            if (kezdet)
+            {
+                // Első nyomás - üdvözlés
+                soundPlayer.SoundLocation = System.IO.Path.Combine(exeDir, "hangok", "udvozlom.wav");
+                soundPlayer.Play();
+                kezdet = false;
+            }
+            else
+            {
+                // Második nyomás - fizetés
+                soundPlayer.SoundLocation = System.IO.Path.Combine(exeDir, "hangok", "koszonjuk.wav");
+                soundPlayer.Play();
+                
+                kavepor -= selected_materials[0];
+                tejpor -= selected_materials[1];
+                cukor -= (selected_materials[2] + cukorMennyiseg);
+                kakaopor -= selected_materials[3];
+                viz -= selected_materials[4];
 
-            System.Diagnostics.Debug.WriteLine("Kavépor {0}, Tejpor {1}, Cukor {2}, Kakaópor {3}, Víz {4}", kavepor, tejpor, cukor, kakaopor, viz);
+                System.Diagnostics.Debug.WriteLine("Kavépor {0}, Tejpor {1}, Cukor {2}, Kakaópor {3}, Víz {4}", kavepor, tejpor, cukor, kakaopor, viz);
 
-            // Visszaállítás
-            selected_materials = new int[5] { 0, 0, 0, 0, 0 };
-            cukorMennyiseg = 0;
-            Cukor_ki.Text = "0";
-            teljes_koltes += ar;
-            ar = 0;
+                // Visszaállítás
+                selected_materials = new int[5] { 0, 0, 0, 0, 0 };
+                cukorMennyiseg = 0;
+                Cukor_ki.Text = "0";
+                teljes_koltes += ar;
+                ar = 0;
+                kezdet = true;
 
-            // Frissített anyagok.txt kiírása
-            string[] updatedMaterials = new string[6];
-            updatedMaterials[0] = "Név;Mennyiség";
-            updatedMaterials[1] = "Kávépor;" + kavepor;
-            updatedMaterials[2] = "Tejpor;" + tejpor;
-            updatedMaterials[3] = "Cukor;" + cukor;
-            updatedMaterials[4] = "Kakaópor;" + kakaopor;
-            updatedMaterials[5] = "Víz;" + viz;
+                // Frissített anyagok.txt kiírása
+                string[] updatedMaterials = new string[6];
+                updatedMaterials[0] = "Név;Mennyiség";
+                updatedMaterials[1] = "Kávépor;" + kavepor;
+                updatedMaterials[2] = "Tejpor;" + tejpor;
+                updatedMaterials[3] = "Cukor;" + cukor;
+                updatedMaterials[4] = "Kakaópor;" + kakaopor;
+                updatedMaterials[5] = "Víz;" + viz;
 
-            File.WriteAllLines(materialPath, updatedMaterials, Encoding.UTF8);
-
+                File.WriteAllLines(materialPath, updatedMaterials, Encoding.UTF8);
+            }
+            
             UpdateButtons();
         }
 
@@ -177,9 +194,9 @@ namespace kaveautomata
                     selected_materials[3] = int.Parse(recipesList[i].Split(";")[4]);
                     selected_materials[4] = int.Parse(recipesList[i].Split(";")[5]);
                     ar = int.Parse(recipesList[i].Split(";")[6]);
-                    mediaPlayer.Open(new Uri(System.IO.Path.Combine(sourceDir, "hangok", kave_neve.ToLower() + ".mp3")));
-                    mediaPlayer.Play();
-                    System.Diagnostics.Debug.WriteLine(System.IO.Path.Combine(sourceDir, "hangok", kave_neve.ToLower() + ".mp3"));
+                    soundPlayer.SoundLocation = System.IO.Path.Combine(exeDir, "hangok", kave_neve.ToLower() + ".wav");
+                    soundPlayer.Play();
+                    System.Diagnostics.Debug.WriteLine(System.IO.Path.Combine(exeDir, "hangok", kave_neve.ToLower() + ".wav"));
                 }
             }
             UpdateButtons();
@@ -207,12 +224,13 @@ namespace kaveautomata
         private void UpdateButtons()
         {
             Ar_ki.Text = ar.ToString();
-            // Ellenőrizzük hogy van-e kiválasztott kávé
-            bool hasSelectedCoffee = selected_materials[4] > 0;
-
-            if (hasSelectedCoffee)
+            
+            if (kezdet)
             {
-                // Ha van kiválasztott kávé minden kávé gombot letiltunk
+                // Kezdetben csak a Buy gomb aktív
+                Buy.IsEnabled = true;
+                
+                // Minden más letiltva
                 Fekete_Kave.IsEnabled = false;
                 Hosszu_Kave.IsEnabled = false;
                 Latte.IsEnabled = false;
@@ -220,27 +238,47 @@ namespace kaveautomata
                 Jegeskave.IsEnabled = false;
                 Moccaccino.IsEnabled = false;
                 Forro_Csoki.IsEnabled = false;
+                
+                Cukor_Less.IsEnabled = false;
+                Cukor_More.IsEnabled = false;
             }
             else
             {
-                // Ha nincs kiválasztott kávé minden gomb a saját receptje alapján lesz engedélyezve/letiltva
-                Fekete_Kave.IsEnabled = CanPressButton("Fekete_Kave");
-                Hosszu_Kave.IsEnabled = CanPressButton("Hosszu_Kave");
-                Latte.IsEnabled = CanPressButton("Latte");
-                Cappuccino.IsEnabled = CanPressButton("Cappuccino");
-                Jegeskave.IsEnabled = CanPressButton("Jegeskave");
-                Moccaccino.IsEnabled = CanPressButton("Moccaccino");
-                Forro_Csoki.IsEnabled = CanPressButton("Forro_Csoki");
+                // Ellenőrizzük hogy van-e kiválasztott kávé
+                bool hasSelectedCoffee = selected_materials[4] > 0;
+
+                if (hasSelectedCoffee)
+                {
+                    // Ha van kiválasztott kávé minden kávé gombot letiltunk
+                    Fekete_Kave.IsEnabled = false;
+                    Hosszu_Kave.IsEnabled = false;
+                    Latte.IsEnabled = false;
+                    Cappuccino.IsEnabled = false;
+                    Jegeskave.IsEnabled = false;
+                    Moccaccino.IsEnabled = false;
+                    Forro_Csoki.IsEnabled = false;
+                }
+                else
+                {
+                    // Ha nincs kiválasztott kávé minden gomb a saját receptje alapján lesz engedélyezve/letiltva
+                    Fekete_Kave.IsEnabled = CanPressButton("Fekete_Kave");
+                    Hosszu_Kave.IsEnabled = CanPressButton("Hosszu_Kave");
+                    Latte.IsEnabled = CanPressButton("Latte");
+                    Cappuccino.IsEnabled = CanPressButton("Cappuccino");
+                    Jegeskave.IsEnabled = CanPressButton("Jegeskave");
+                    Moccaccino.IsEnabled = CanPressButton("Moccaccino");
+                    Forro_Csoki.IsEnabled = CanPressButton("Forro_Csoki");
+                }
+
+                // Buy gomb toggle logika csak akkor engedélyezett ha van kiválasztott kávé
+                Buy.IsEnabled = hasSelectedCoffee;
+
+                // Cukor gombok logikája
+                Cukor_Less.IsEnabled = cukorMennyiseg > 0;
+
+                // Csak akkor engedélyezett ha van még cukor ÉS nem lépjük túl a limitet
+                Cukor_More.IsEnabled = cukorMennyiseg < 3 && cukor >= (selected_materials[2] + cukorMennyiseg + 1) && selected_materials[4] > 0;
             }
-
-            // Buy gomb toggle logika csak akkor engedélyezett ha van kiválasztott kávé
-            Buy.IsEnabled = hasSelectedCoffee;
-
-            // Cukor gombok logikája
-            Cukor_Less.IsEnabled = cukorMennyiseg > 0;
-
-            // Csak akkor engedélyezett ha van még cukor ÉS nem lépjük túl a limitet
-            Cukor_More.IsEnabled = cukorMennyiseg < 3 && cukor >= (selected_materials[2] + cukorMennyiseg + 1) && selected_materials[4] > 0;
         }
 
         private void Reset_Materials_Click(object sender, RoutedEventArgs e)
@@ -251,6 +289,7 @@ namespace kaveautomata
             cukor = 50;
             kakaopor = 50;
             viz = 50;
+            kezdet = true;
 
             UpdateButtons();
 

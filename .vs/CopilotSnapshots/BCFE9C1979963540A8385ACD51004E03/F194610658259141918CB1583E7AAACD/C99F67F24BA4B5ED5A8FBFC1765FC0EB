@@ -1,0 +1,247 @@
+﻿using System.IO;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Runtime.CompilerServices;
+
+namespace kaveautomata
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        private readonly List<string> recipesList = new();
+        public MainWindow()
+        {
+            // Ott keressük az anyagok.txt-t, ahol ez a .cs fájl van:
+            string sourceDir = GetSourceDirectory();
+            string materialPath = System.IO.Path.Combine(sourceDir, "anyagok.txt"); 
+            string recipePath = System.IO.Path.Combine(sourceDir, "receptek.txt");
+
+            String[] materials = File.ReadAllLines(materialPath, Encoding.UTF8);
+            String[] recipes = File.ReadAllLines(recipePath, Encoding.UTF8);
+
+            recipesList.Clear();
+            recipesList.AddRange(recipes);
+
+            if (materials.Length != 6)
+            {
+                MessageBox.Show("Hiba: Az anyagok.txt fájlnak 5 sorból kell állnia! (+A felső komment)");
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                InitializeComponent();
+
+                // Anyagok beolvasása meghatározása mennyiség szerint
+                kavepor = int.Parse(materials[1].Split(";")[1]);
+                cukor = int.Parse(materials[2].Split(";")[1]);
+                tejpor = int.Parse(materials[3].Split(";")[1]);
+                kakaopor = int.Parse(materials[4].Split(";")[1]);
+                viz = int.Parse(materials[5].Split(";")[1]);
+
+                // Induláskor állítsuk a gombok állapotát az elérhető alapanyagok alapján
+                UpdateButtons();
+            }
+        }
+
+        // Visszaadja ennek a forrásfájlnak a könyvtárát
+        private static string GetSourceDirectory([CallerFilePath] string? thisFilePath = null)
+        {
+            return System.IO.Path.GetDirectoryName(thisFilePath!)!;
+        }
+        
+        int kavepor = 0;
+        int tejpor = 0;
+        int cukor = 0;
+        int kakaopor = 0;
+        int viz = 0;
+
+        int cukorMennyiseg = 0;
+
+        int[] selected_materials = new int[5] { 0, 0, 0, 0, 0 }; // kávépor, tejpor, cukor, kakaópor, víz
+
+        // Segédfüggvény: visszaadja a megadott nevű recept igényeit [kávépor, tejpor, cukor, kakaópor, víz]
+        private int[]? GetNeedsByName(string recipeName)
+        {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                var parts = recipesList[i].Split(";");
+                if (parts.Length >= 6 && parts[0] == recipeName)
+                {
+                    return new int[]
+                    {
+                        int.Parse(parts[1]),
+                        int.Parse(parts[2]),
+                        int.Parse(parts[3]),
+                        int.Parse(parts[4]),
+                        int.Parse(parts[5])
+                    };
+                }
+            }
+            return null;
+        }
+
+        // Segédfüggvény: van-e elég alapanyag a megadott nevű recepthez (alap cukorral, extra nélkül)
+        private bool CanMakeBase(string recipeName)
+        {
+            var needs = GetNeedsByName(recipeName);
+            if (needs == null) return false;
+            return kavepor >= needs[0]
+                && tejpor >= needs[1]
+                && cukor >= needs[2]
+                && kakaopor >= needs[3]
+                && viz >= needs[4];
+        }
+
+        private void SelectRecipe(string recipeName)
+        {
+            var needs = GetNeedsByName(recipeName);
+            if (needs != null)
+            {
+                Select_Coffe(needs[0], needs[1], needs[2], needs[3], needs[4]);
+                // Új választáskor a plusz cukrot nullázzuk
+                if (cukorMennyiseg != 0)
+                {
+                    cukorMennyiseg = 0;
+                    Cukor_ki.Text = "0";
+                }
+            }
+        }
+
+        private void Fekete_Kave_Click(object sender, RoutedEventArgs e)
+        {
+            SelectRecipe("Fekete kávé");
+            UpdateButtons();
+        }
+
+        private void Hosszu_Kave_Click(object sender, RoutedEventArgs e)
+        {
+            SelectRecipe("Hosszú kávé");
+            UpdateButtons();
+        }
+
+        private void Latte_Click(object sender, RoutedEventArgs e)
+        {
+            SelectRecipe("Latte");
+            UpdateButtons();
+        }
+
+        private void Cappuccino_Click(object sender, RoutedEventArgs e)
+        {
+            SelectRecipe("Capuccino");
+            UpdateButtons();
+        }
+
+        private void Jegeskave_Click(object sender, RoutedEventArgs e)
+        {
+            SelectRecipe("Jegeskávé");
+            UpdateButtons();
+        }
+
+        private void Moccaccino_Click(object sender, RoutedEventArgs e)
+        {
+            SelectRecipe("Moccaccino");
+            UpdateButtons();
+        }
+
+        private void Forro_Csoki_Click(object sender, RoutedEventArgs e)
+        {
+            SelectRecipe("Forró csoki");
+            UpdateButtons();
+        }
+
+        private void Cukor_Less_Click(object sender, RoutedEventArgs e)
+        {
+            if (cukorMennyiseg > 0)
+            {
+                cukorMennyiseg--;
+                Cukor_ki.Text = cukorMennyiseg.ToString();
+                UpdateButtons();
+            }
+        }
+
+        private void Cukor_More_Click(object sender, RoutedEventArgs e)
+        {
+            if (cukorMennyiseg < 3)
+            {
+                cukorMennyiseg++;
+                Cukor_ki.Text = cukorMennyiseg.ToString();
+                UpdateButtons();
+            }
+        }
+
+        private void Buy_Click(object sender, RoutedEventArgs e)
+        {
+            kavepor -= selected_materials[0];
+            tejpor -= selected_materials[1];
+            cukor -= (selected_materials[2] + cukorMennyiseg);
+            kakaopor -= selected_materials[3];
+            viz -= selected_materials[4];
+
+            System.Diagnostics.Debug.WriteLine("Kavépor {0}, Tejpor {1}, Cukor {2}, Kakaópor {3}, Víz {4}",kavepor,tejpor,cukor,kakaopor,viz);
+            if (cukorMennyiseg != 0)
+            {
+                cukorMennyiseg = 0;
+                Cukor_ki.Text = "0";
+            }
+            UpdateButtons();
+        }
+
+        public void Select_Coffe(int kavepor, int tejpor, int cukor, int kakaopor, int viz)
+        {
+            selected_materials[0] = kavepor;
+            selected_materials[1] = tejpor;
+            selected_materials[2] = cukor;
+            selected_materials[3] = kakaopor;
+            selected_materials[4] = viz;
+        }
+
+        public void UpdateButtons()
+        {
+            // Recept gombok: csak akkor engedélyezett, ha az adott recept alapból elkészíthető
+            Fekete_Kave.IsEnabled = CanMakeBase("Fekete kávé");
+            Hosszu_Kave.IsEnabled = CanMakeBase("Hosszú kávé");
+            Latte.IsEnabled = CanMakeBase("Latte");
+            Cappuccino.IsEnabled = CanMakeBase("Capuccino");
+            Jegeskave.IsEnabled = CanMakeBase("Jegeskávé");
+            Moccaccino.IsEnabled = CanMakeBase("Moccaccino");
+            Forro_Csoki.IsEnabled = CanMakeBase("Forró csoki");
+
+            // Van-e kiválasztott recept?
+            bool hasSelection = selected_materials[0] != 0 || selected_materials[1] != 0 || selected_materials[2] != 0 || selected_materials[3] != 0 || selected_materials[4] != 0;
+
+            // Buy gomb csak akkor, ha a kiválasztott recept az extra cukorral együtt is megvalósítható
+            bool canBuy = hasSelection
+                && kavepor >= selected_materials[0]
+                && tejpor >= selected_materials[1]
+                && cukor >= (selected_materials[2] + cukorMennyiseg)
+                && kakaopor >= selected_materials[3]
+                && viz >= selected_materials[4];
+
+            Buy.IsEnabled = canBuy;
+
+            // Cukor +/- csak kiválasztás esetén értelmes; '+' csak ha van elég cukor a következő egységhez és max 3-ig
+            Cukor_Less.IsEnabled = hasSelection && cukorMennyiseg > 0;
+            Cukor_More.IsEnabled = hasSelection && cukorMennyiseg < 3 && cukor >= (selected_materials[2] + cukorMennyiseg + 1);
+
+            // Ha egyik recept sem készíthető, minden recept gomb marad tiltva (a fenti beállítás ezt már intézte)
+            if (!Fekete_Kave.IsEnabled && !Hosszu_Kave.IsEnabled && !Latte.IsEnabled && !Cappuccino.IsEnabled && !Jegeskave.IsEnabled && !Moccaccino.IsEnabled && !Forro_Csoki.IsEnabled)
+            {
+                // Biztonságból akció gombokat is letiltjuk
+                Buy.IsEnabled = false;
+                Cukor_Less.IsEnabled = false;
+                Cukor_More.IsEnabled = false;
+                System.Diagnostics.Debug.WriteLine("Nincs elég alapanyag semmelyik italhoz!");
+            }
+        }
+    }
+}

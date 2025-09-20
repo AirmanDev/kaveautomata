@@ -1,0 +1,215 @@
+﻿using System.IO;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Runtime.CompilerServices;
+
+namespace kaveautomata
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        private readonly List<string> recipesList = new();
+        public MainWindow()
+        {
+            // Ott keressük az anyagok.txt-t, ahol ez a .cs fájl van:
+            string sourceDir = GetSourceDirectory();
+            string materialPath = System.IO.Path.Combine(sourceDir, "anyagok.txt"); 
+            string recipePath = System.IO.Path.Combine(sourceDir, "receptek.txt");
+
+            String[] materials = File.ReadAllLines(materialPath, Encoding.UTF8);
+            String[] recipes = File.ReadAllLines(recipePath, Encoding.UTF8);
+
+            recipesList.Clear();
+            recipesList.AddRange(recipes);
+
+            if (materials.Length != 6)
+            {
+                MessageBox.Show("Hiba: Az anyagok.txt fájlnak 5 sorból kell állnia! (+A felső komment)");
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                InitializeComponent();
+
+                // Anyagok beolvasása meghatározása mennyiség szerint
+                kavepor = int.Parse(materials[1].Split(";")[1]);
+                cukor = int.Parse(materials[2].Split(";")[1]);
+                tejpor = int.Parse(materials[3].Split(";")[1]);
+                kakaopor = int.Parse(materials[4].Split(";")[1]);
+                viz = int.Parse(materials[5].Split(";")[1]);
+            }
+        }
+
+        // Visszaadja ennek a forrásfájlnak a könyvtárát
+        private static string GetSourceDirectory([CallerFilePath] string? thisFilePath = null)
+        {
+            return System.IO.Path.GetDirectoryName(thisFilePath!)!;
+        }
+        
+        int kavepor = 0;
+        int tejpor = 0;
+        int cukor = 0;
+        int kakaopor = 0;
+        int viz = 0;
+
+        int cukorMennyiseg = 0;
+
+        int[] selected_materials = new int[5] { 0, 0, 0, 0, 0 }; // kávépor, tejpor, cukor, kakaópor, víz
+
+        private void Fekete_Kave_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Fekete kávé")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
+                    UpdateButtons();
+        }
+
+        private void Hosszu_Kave_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Hosszú kávé")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
+            UpdateButtons();
+        }
+
+        private void Latte_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Latte")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
+            UpdateButtons();
+        }
+
+        private void Cappuccino_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Capuccino")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
+            UpdateButtons();
+        }
+
+        private void Jegeskave_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Jegeskávé")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
+            UpdateButtons();
+        }
+
+        private void Moccaccino_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Moccaccino")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
+            UpdateButtons();
+        }
+
+        private void Forro_Csoki_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 1; i < recipesList.Count; i++)
+            {
+                if (recipesList[i].Split(";")[0] == "Forró csoki")
+                {
+                    Select_Coffe(int.Parse(recipesList[i].Split(";")[1]), int.Parse(recipesList[i].Split(";")[2]), int.Parse(recipesList[i].Split(";")[3]), int.Parse(recipesList[i].Split(";")[4]), int.Parse(recipesList[i].Split(";")[5]));
+                }
+            }
+            UpdateButtons();
+        }
+
+        private void Cukor_Less_Click(object sender, RoutedEventArgs e)
+        {
+            if (cukorMennyiseg > 0)
+            {
+                cukorMennyiseg--;
+                Cukor_ki.Text = cukorMennyiseg.ToString();
+            }
+        }
+
+        private void Cukor_More_Click(object sender, RoutedEventArgs e)
+        {
+            if (cukorMennyiseg < 3)
+            {
+                cukorMennyiseg++;
+                Cukor_ki.Text = cukorMennyiseg.ToString();
+            }
+        }
+
+        private void Buy_Click(object sender, RoutedEventArgs e)
+        {
+            kavepor -= selected_materials[0];
+            tejpor -= selected_materials[1];
+            cukor -= (selected_materials[2] + cukorMennyiseg);
+            kakaopor -= selected_materials[3];
+            viz -= selected_materials[4];
+
+            System.Diagnostics.Debug.WriteLine("Kavépor {0}, Tejpor {1}, Cukor {2}, Kakaópor {3}, Víz {4}",kavepor,tejpor,cukor,kakaopor,viz);
+            if (cukorMennyiseg != 0)
+            {
+                cukorMennyiseg = 0;
+                Cukor_ki.Text = "0";
+            }
+            UpdateButtons();
+        }
+
+        public void Select_Coffe(int kavepor, int tejpor, int cukor, int kakaopor, int viz)
+        {
+            selected_materials[0] = kavepor;
+            selected_materials[1] = tejpor;
+            selected_materials[2] = cukor;
+            selected_materials[3] = kakaopor;
+            selected_materials[4] = viz;
+        }
+
+        public void UpdateButtons()
+        {
+            if (selected_materials[0] > kavepor || selected_materials[1] > tejpor || (selected_materials[2] + cukorMennyiseg) > cukor || selected_materials[3] > kakaopor || selected_materials[4] > viz)
+            {
+                System.Diagnostics.Debug.WriteLine("Nincs elég alapanyag!");
+            }
+            Fekete_Kave.IsEnabled = !Fekete_Kave.IsEnabled;
+            Hosszu_Kave.IsEnabled = !Hosszu_Kave.IsEnabled;
+            Latte.IsEnabled = !Latte.IsEnabled;
+            Cappuccino.IsEnabled = !Cappuccino.IsEnabled;
+            Jegeskave.IsEnabled = !Jegeskave.IsEnabled;
+            Moccaccino.IsEnabled = !Moccaccino.IsEnabled;
+            Forro_Csoki.IsEnabled = !Forro_Csoki.IsEnabled;
+            Buy.IsEnabled = !Buy.IsEnabled;
+            Cukor_Less.IsEnabled = !Cukor_Less.IsEnabled;
+            Cukor_More.IsEnabled = !Cukor_More.IsEnabled;
+        }
+    }
+}

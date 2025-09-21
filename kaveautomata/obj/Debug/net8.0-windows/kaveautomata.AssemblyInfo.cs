@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("kaveautomata")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e39196816f83600c9d80350f4ed2883ae831cd0a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+560a44f0eff6cdd07fcebe29a4342803a80fde8d")]
 [assembly: System.Reflection.AssemblyProductAttribute("kaveautomata")]
 [assembly: System.Reflection.AssemblyTitleAttribute("kaveautomata")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
